@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+<div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+        <div class="card-wrapper">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="logo">
+            </div>
+            <div class="card fat">
+                <div class="card-body">
+                    <h4 class="card-title" style="text-align: center">Hello {{ current_user.name }}</h4>
+                    <h4 class="card-title" style="text-align: center">Your email is {{ current_user.email }}</h4>
+                </div>
+            </div>
+            <div class="footer">
+                Copyleft 2023 &mdash; Mohammad Hossein Arab
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
