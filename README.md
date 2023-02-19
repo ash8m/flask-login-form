@@ -1,8 +1,8 @@
 <h1>Flask login form</h1>
 
-Used nauvalazhar/bootstrap-4-login-page for template
+Used https://github.com/nauvalazhar/bootstrap-4-login-page for template
 
-Used techwithtim/Flask-Web-App-Tutorial Video to learn how to make this login form
+Used https://github.com/techwithtim/Flask-Web-App-Tutorial Video to learn how to make this login form
 
 ### I used this libs for this project:
 1. flask
