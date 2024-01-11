@@ -6,7 +6,7 @@ from sqlalchemy_utils import database_exists, create_database
 db=SQLAlchemy()
 DB_NAME = "users.db"
 
-def creat_app():
+def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "adsfjwuenvcjWEOPoiajfjsndsiuhwe"
     app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql://root:djcad1234@172.17.0.3:3306/{DB_NAME}'
