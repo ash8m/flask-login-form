@@ -51,7 +51,7 @@ def sign_up():
         elif password != password_confirm:
             flash("Passwords don\'t mach!", category="error")
         else:
-            new_user = User(email=email, name=name, password=generate_password_hash(password, method="sha256"))
+            new_user = User(email=email, name=name, password=generate_password_hash(password, method="scrypt"))
             db.session.add(new_user)
             db.session.commit()
             flash("Created account successfuly", category="success")

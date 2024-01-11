@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from sqlalchemy_utils import database_exists, create_database
 
 db=SQLAlchemy()
 DB_NAME = "users.db"
@@ -8,8 +9,11 @@ DB_NAME = "users.db"
 def creat_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "adsfjwuenvcjWEOPoiajfjsndsiuhwe"
-    app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
+    app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql://root:djcad1234@172.17.0.3:3306/{DB_NAME}'
     db.init_app(app)
+    if not database_exists(app.config["SQLALCHEMY_DATABASE_URI"]):
+        create_database(app.config["SQLALCHEMY_DATABASE_URI"])
+        print('Created Database!')
 
 
     from .views import views
@@ -32,8 +36,3 @@ def creat_app():
         return User.query.get(int(id))
 
     return app
-
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Created Database!')
