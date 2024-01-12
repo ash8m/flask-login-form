@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
 import requests
 import json
+import socket
 
 views = Blueprint("views", __name__)
 
@@ -60,7 +61,6 @@ def home():
           
               <head>
                   <meta charset="utf-8">
-                  <meta name="author" content="Kodinger">
                   <meta name="viewport" content="width=device-width,initial-scale=1">
                   <title>Home Page</title>
                   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -73,6 +73,29 @@ def home():
                           height: 150px; /* set your desired height */
                           object-fit: cover; /* This property ensures that the image covers the entire box without distorting its aspect ratio */
                       }
+                 </style>
+                 
+                 <title>Text Container</title>
+                 <style>
+                       body {
+                            margin: 0;
+                            padding: 0;
+                            font-family: Arial, sans-serif;
+                        }
+                    
+                        .container {
+                            position: fixed;
+                            top: 10px;
+                            right: 10px;
+                            width: 200px; /* Adjust the width as needed */
+                            height: 100px; /* Adjust the height as needed */
+                            padding: 10px;
+                            background-color: #f0f0f0;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            font-size: 14px;
+                        }
                   </style>
               </head>'''
               
@@ -111,6 +134,36 @@ def home():
               html=html+'<img src="http://localhost/pics/'+thumb+'">' #nginx
               html=html+"</a>"
               print("=======================")
+              
+
+    HOST = "127.0.0.1"  # The server's hostname or IP address
+    PORT = 81  # The port used by the server
+    received_data = ""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((HOST, PORT))
+        s.sendall("1".encode())
+        received_data = s.recv(1024).decode()
+        s.close()
+            
+    
+    html += ''' 
+    <body>
+
+    <div class="container">
+    '''
+    #    <p>This is the text inside the container. You can put any text or content here.</p>
+    #    <p>Feel free to modify this code to suit your needs.</p>
+    for line in received_data.split('\n'):
+        html+= '<p>'+line+'</p>'
+    # html += received_data
+    
+    html+= '''
+    </div>
+
+    </body>
+    </html>
+    '''
+    
 
     return html
 
