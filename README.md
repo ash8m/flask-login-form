@@ -12,6 +12,7 @@ Used https://github.com/techwithtim/Flask-Web-App-Tutorial Video to learn how to
 5. black (for formatting pythons file)
 6. mysqlclient
 7. sqlalchemy_utils
+8. requests
 
 apt packages needed for mysqlclient
 sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
