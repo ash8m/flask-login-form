@@ -9,7 +9,7 @@ DB_NAME = "users.db"
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "adsfjwuenvcjWEOPoiajfjsndsiuhwe"
-    app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql://root:djcad1234@172.17.0.3:3306/{DB_NAME}'
+    app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql://root:password@app-sql-db-1:3306/{DB_NAME}'
     db.init_app(app)
     if not database_exists(app.config["SQLALCHEMY_DATABASE_URI"]):
         create_database(app.config["SQLALCHEMY_DATABASE_URI"])
