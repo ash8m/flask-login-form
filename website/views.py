@@ -94,7 +94,7 @@ def home():
                             border: 1px solid #ccc;
                             border-radius: 5px;
                             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                            font-size: 14px;
+                            font-size: 13px;
                         }
                   </style>
               </head>'''
@@ -150,6 +150,7 @@ def home():
     <body>
 
     <div class="container">
+    <h5>Recommendations</h5>
     '''
     #    <p>This is the text inside the container. You can put any text or content here.</p>
     #    <p>Feel free to modify this code to suit your needs.</p>
