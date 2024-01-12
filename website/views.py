@@ -1,9 +1,108 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
+import requests
+import json
 
 views = Blueprint("views", __name__)
+
+@views.route('/Video/<video>')
+def video_page(video):
+    print (video)
+    url = 'http://localhost:8080/videos?filter={"video.uuid":"'+video+'"}' #MONGO
+    headers = {"Authorization": "Basic YWRtaW46c2VjcmV0"}
+    #request
+    payload = json.dumps({ })
+    print (request.endpoint)
+    response = requests.get(url, headers=headers)
+    print (url)
+    if response.status_code != 200:
+      print("Unexpected response: {0}. Status: {1}. Message: {2}".format(response.reason, response.status, jResp['Exception']['Message']))
+      return "Unexpected response: {0}. Status: {1}. Message: {2}".format(response.reason, response.status, jResp['Exception']['Message'])
+    jResp = response.json()
+    print (type(jResp))
+    print (jResp)
+    for index in jResp:
+        for key in index:
+           if (key !="_id"):
+              print (index[key])
+              for key2 in index[key]:
+                  print (key2,index[key][key2])
+                  if (key2=="Name"):
+                      video=index[key][key2]
+                  if (key2=="file"):
+                      videofile=index[key][key2]
+                  if (key2=="pic"):
+                      pic=index[key][key2]
+    return render_template('video.html', name=video,file=videofile,pic=pic)
+
 
 @views.route("/")
 @login_required
 def home():
-    return render_template("home.html", user=current_user)
+    print("hello")
+    url = "http://localhost:8080/videos" #MONGO
+    #print(os.environ['AUTH'])
+    headers = {"Authorization": "Basic YWRtaW46c2VjcmV0"}
+    payload = json.dumps({ })
+
+    response = requests.get(url, headers=headers)
+    print (response)
+    # exit if status code is not ok
+    print (response)
+    print (response.status_code)
+    if response.status_code != 200:
+      print("Unexpected response: {0}. Status: {1}. Message: {2}".format(response.reason, response.status, jResp['Exception']['Message']))
+      return "Unexpected response: {0}. Status: {1}. Message: {2}".format(response.reason, response.status, jResp['Exception']['Message'])
+    jResp = response.json()
+    print (type(jResp))
+    html = '''<!DOCTYPE html>
+              <html lang="en">
+          
+              <head>
+                  <meta charset="utf-8">
+                  <meta name="author" content="Kodinger">
+                  <meta name="viewport" content="width=device-width,initial-scale=1">
+                  <title>Home Page</title>
+                  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+                  <link rel="stylesheet" type="text/css" href="/static/css/my-login.css">
+              </head>'''
+              
+    html+= '''<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+                     <span class="navbar-toggler-icon"></span>
+                 </button>
+                 <div class="collapse navbar-collapse" id="navbar">
+                     <div class="navbar-nav">
+                         <a class="nav-item nav-link" id="home" href="/">Home</a>
+                         <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                     </div>
+                 </div>
+             </nav>'''
+    
+    html += "<h2> "+ current_user.name +"'s Videos</h2>"
+    for index in jResp:
+       print (json.dumps(index))
+       print ("----------------")
+       for key in index:
+
+           if (key !="_id" and key != "_etag"):
+              print (index[key])
+              for key2 in index[key]:
+                  print (key2,index[key][key2])
+                  if (key2=="Name"):
+                      name=index[key][key2]
+                  if (key2=="thumb"):
+                      thumb=index[key][key2]
+                  if (key2=="uuid"):
+                      uuid=index[key][key2]
+              html=html+'<h3>'+name+'</h3>'
+
+              ServerIP=request.host.split(':')[0]
+              html=html+'<a href="http://'+ServerIP+':5000'+'/Video/'+uuid+'">' #back to flask
+              html=html+'<img src="http://localhost/pics/'+thumb+'">' #nginx
+              html=html+"</a>"
+              print("=======================")
+
+    return html
+
+#    return render_template("home.html", user=current_user)
