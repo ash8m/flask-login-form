@@ -65,6 +65,15 @@ def home():
                   <title>Home Page</title>
                   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
                   <link rel="stylesheet" type="text/css" href="/static/css/my-login.css">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Thumbnail Example</title>
+                  <style>
+                      img {
+                          width: 200px; /* set your desired width */
+                          height: 150px; /* set your desired height */
+                          object-fit: cover; /* This property ensures that the image covers the entire box without distorting its aspect ratio */
+                      }
+                  </style>
               </head>'''
               
     html+= '''<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
