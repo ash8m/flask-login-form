@@ -11,7 +11,7 @@ def video_page(video):
     print (video)
     # expect the mongo deployment to be in the same server for now
     ServerIP=request.host.split(':')[0]    
-    url = 'http://'+ServerIP+':8080/videos?filter={"video.uuid":"'+video+'"}' #MONGO
+    url = 'http://restheart:8080/videos?filter={"video.uuid":"'+video+'"}' #MONGO
     print(ServerIP)
     headers = {"Authorization": "Basic YWRtaW46c2VjcmV0"}
     #request
@@ -47,7 +47,7 @@ def home():
     print("hello")
     # expect the mongo deployment to be in the same server for now
     ServerIP=request.host.split(':')[0]    
-    url = "http://"+ServerIP+":8080/videos" #MONGO
+    url = "http://restheart:8080/videos" #MONGO
     #print(os.environ['AUTH'])
     headers = {"Authorization": "Basic YWRtaW46c2VjcmV0"}
     payload = json.dumps({ })
@@ -141,7 +141,7 @@ def home():
               print("=======================")
               
     # expect the tfrecomm deployment to be in the same server for now
-    HOST = ServerIP  # The server's hostname or IP address
+    HOST = "tfrecomm"
     PORT = 81  # The port used by the server
     received_data = ""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
