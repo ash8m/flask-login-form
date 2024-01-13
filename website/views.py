@@ -45,7 +45,9 @@ def video_page(video):
 @login_required
 def home():
     print("hello")
-    url = "http://localhost:8080/videos" #MONGO
+    # expect the mongo deployment to be in the same server for now
+    ServerIP=request.host.split(':')[0]    
+    url = "http://"+ServerIP+":8080/videos" #MONGO
     #print(os.environ['AUTH'])
     headers = {"Authorization": "Basic YWRtaW46c2VjcmV0"}
     payload = json.dumps({ })
@@ -102,7 +104,6 @@ def home():
                         }
                   </style>
               </head>'''
-              
     html+= '''<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
                      <span class="navbar-toggler-icon"></span>
@@ -133,14 +134,14 @@ def home():
                       uuid=index[key][key2]
               html=html+'<h3>'+name+'</h3>'
 
-              ServerIP=request.host.split(':')[0]
+              # ServerIP=request.host.split(':')[0]
               html=html+'<a href="http://'+ServerIP+':5000'+'/Video/'+uuid+'">' #back to flask
               html=html+'<img src="http://localhost/pics/'+thumb+'">' #nginx
               html=html+"</a>"
               print("=======================")
               
-
-    HOST = "127.0.0.1"  # The server's hostname or IP address
+    # expect the tfrecomm deployment to be in the same server for now
+    HOST = ServerIP  # The server's hostname or IP address
     PORT = 81  # The port used by the server
     received_data = ""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
