@@ -9,7 +9,10 @@ views = Blueprint("views", __name__)
 @views.route('/Video/<video>')
 def video_page(video):
     print (video)
-    url = 'http://localhost:8080/videos?filter={"video.uuid":"'+video+'"}' #MONGO
+    # expect the mongo deployment to be in the same server for now
+    ServerIP=request.host.split(':')[0]    
+    url = 'http://'+ServerIP+':8080/videos?filter={"video.uuid":"'+video+'"}' #MONGO
+    print(ServerIP)
     headers = {"Authorization": "Basic YWRtaW46c2VjcmV0"}
     #request
     payload = json.dumps({ })
@@ -22,6 +25,7 @@ def video_page(video):
     jResp = response.json()
     print (type(jResp))
     print (jResp)
+    videofile, video, pic=('','','')
     for index in jResp:
         for key in index:
            if (key !="_id"):
