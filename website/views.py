@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 import requests
 import json
 import socket
+import random
 
 views = Blueprint("views", __name__)
 
@@ -144,11 +145,16 @@ def home():
     HOST = "tfrecomm"
     PORT = 81  # The port used by the server
     received_data = ""
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, PORT))
-        s.sendall("1".encode())
-        received_data = s.recv(1024).decode()
-        s.close()
+    for i in range(5):
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect((HOST, PORT))
+                s.sendall(str(random.randint(1,6000)).encode())
+                received_data = s.recv(1024).decode()
+        except Exception as e:
+            print(f"Attempt {i+1} failed: {str(e)}")
+        else:
+            break
             
     
     html += ''' 
