@@ -145,7 +145,7 @@ def home():
     HOST = "tfrecomm"
     PORT = 81  # The port used by the server
     received_data = ""
-    for i in range(0):
+    for i in range(5):
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
