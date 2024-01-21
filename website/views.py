@@ -45,7 +45,7 @@ def video_page(video):
 @views.route("/")
 @login_required
 def home():
-    print("helliiio")
+    print("hellii")
     # expect the mongo deployment to be in the same server for now
     ServerIP=request.host.split(':')[0]    
     url = "http://54.86.116.7/myflix/videos" #MONGO
